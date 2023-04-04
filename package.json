@@ -4,12 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prepare": "husky install",
-    "lint:format": "npx --no-install lint-staged && npx --no-install pretty-quick --staged"
+    "lint:format": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
+    "build": "ng build",
+    "deploy": "sls client deploy --no-config-change --no-policy-change --no-cors-change",
+    "build:deploy": "yarn build && yarn deploy"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +27,9 @@
     "@angular/router": "^15.1.4",
     "bootstrap": "^4.6.0",
     "rxjs": "^7.8.0",
+    "serverless": "^3.29.0",
+    "serverless-finch": "^4.0.0",
+    "serverless-single-page-app-plugin": "^1.0.4",
     "tslib": "^2.5.0",
     "zone.js": "^0.12.0"
   },
