@@ -10,7 +10,7 @@
     "prepare": "husky install",
     "lint:format": "npx --no-install lint-staged && npx --no-install pretty-quick --staged",
     "build": "ng build",
-    "deploy": "sls client deploy --no-config-change --no-policy-change --no-cors-change",
+    "deploy": "sls client deploy --no-config-change --no-policy-change --no-cors-change --no-confirm",
     "build:deploy": "yarn build && yarn deploy"
   },
   "private": true,
