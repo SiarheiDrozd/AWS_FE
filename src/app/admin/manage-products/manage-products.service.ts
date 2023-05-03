@@ -29,13 +29,31 @@ export class ManageProductsService extends ApiService {
     );
   }
 
+  private getAuthToken(): string | null {
+    const token = localStorage.getItem('authorization_token');
+
+    if (!token) {
+      localStorage.setItem('authorization_token', 'Basic ' + btoa('SiarheiDrozd:TEST_PASSWORD'))
+    }
+
+    return token;
+  }
   private getPreSignedUrl(fileName: string): Observable<string> {
     const url = this.getUrl('import', 'import');
-
-    return this.http.get<string>(url, {
+    const authorization = this.getAuthToken();
+    const options = {
       params: {
         name: fileName,
       },
-    });
+      headers: {}
+    }
+
+    if (authorization) {
+      options.headers = {
+        authorization
+      }
+    }
+
+    return this.http.get<string>(url, options);
   }
 }
