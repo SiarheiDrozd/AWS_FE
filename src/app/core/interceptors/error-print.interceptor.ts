@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -19,11 +20,18 @@ export class ErrorPrintInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       tap({
-        error: () => {
+        error: (err: HttpErrorResponse) => {
           const url = new URL(request.url);
+          let errorMessage = `Request to "${url.pathname}" failed. Check the console for the details`;
+
+          switch (err.status) {
+            case 401:
+            case 403:
+              errorMessage = err.error.message
+          }
 
           this.notificationService.showError(
-            `Request to "${url.pathname}" failed. Check the console for the details`,
+            errorMessage,
             0
           );
         },
